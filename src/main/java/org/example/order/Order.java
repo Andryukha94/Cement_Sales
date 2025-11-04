@@ -1,21 +1,23 @@
 package org.example.order;
 
+import java.time.LocalDateTime;
+
 public class Order {
-    private final String time;
-    private final String company;
+    private final LocalDateTime date;
+    private final String companyName;
     private final double weight;
 
-    public Order(String time, String company, double weight) {
-        this.time = time;
-        this.company = company;
+    public Order(String company, double weight, LocalDateTime date) {
+        this.date = date;
+        this.companyName = company;
         this.weight = weight;
     }
 
-    public String getTime() {
-        return time;
+    public LocalDateTime getDate() {
+        return date;
     }
     public String getCompany() {
-        return company;
+        return companyName;
     }
     public double getWeight() {
         return weight;
