@@ -20,16 +20,13 @@ public class PriceCalculator {
 
             String company = order.getCompany();
 
-            if (reports.containsKey(company)) {
-                OrderReport existing = reports.get(company);
-                double newTotal = existing.getTotalPrice() + finalCost;
-                reports.put(company, new OrderReport(company, newTotal));
-            } else {
-                reports.put(company, new OrderReport(company, finalCost));
-            }
+            reports.merge(company,
+                    new OrderReport(company, finalCost),
+                    (existing, newReport) -> new OrderReport(company,existing.getTotalPrice() + newReport.getTotalPrice()
+                    )
+            );
 
-            currentDiscount -= stepDiscount;
-            if (currentDiscount < 0) currentDiscount = 0;
+            currentDiscount = Math.max(currentDiscount - stepDiscount, 0);
         }
 
         return new ArrayList<>(reports.values());
