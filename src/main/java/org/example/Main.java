@@ -2,8 +2,7 @@ package org.example;
 
 import org.example.calculator.PriceCalculator;
 import org.example.converter.OrderConverter;
-import org.example.converter.comma.CommaOrderConverter;
-import org.example.converter.hash.HashOrderConverter;
+import org.example.converter.ConverterFactory;
 import org.example.manager.OrderManager;
 
 public class Main {
@@ -16,13 +15,7 @@ public class Main {
         double startDiscount = 50.0;
         double stepDiscount = 5.0;
 
-        OrderConverter converter;
-        if (inputFile.contains("hash")) {
-            converter = new HashOrderConverter();
-        } else {
-            converter = new CommaOrderConverter();
-        }
-
+        OrderConverter converter = ConverterFactory.FactoryConverter(inputFile);
         PriceCalculator calculator = new PriceCalculator();
         OrderManager manager = new OrderManager(converter, calculator);
         manager.process(inputFile, outputFile, priceKg, startDiscount, stepDiscount);
