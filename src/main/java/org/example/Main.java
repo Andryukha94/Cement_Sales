@@ -2,7 +2,7 @@ package org.example;
 
 import org.example.calculator.PriceCalculator;
 import org.example.converter.OrderConverter;
-import org.example.converter.ConverterFactory;
+import org.example.converter.OrderConverterFactory;
 import org.example.manager.OrderManager;
 
 public class Main {
@@ -15,7 +15,7 @@ public class Main {
         double startDiscount = 50.0;
         double stepDiscount = 5.0;
 
-        OrderConverter converter = ConverterFactory.FactoryConverter(inputFile);
+        OrderConverter converter = OrderConverterFactory.FactoryConverter(inputFile);
         PriceCalculator calculator = new PriceCalculator();
         OrderManager manager = new OrderManager(converter, calculator);
         manager.process(inputFile, outputFile, priceKg, startDiscount, stepDiscount);
