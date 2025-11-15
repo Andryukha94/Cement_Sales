@@ -25,10 +25,9 @@ public class OrderManager {
         List<Order> orders = orderConverter.convertToOrders(lines);
         List<OrderReport> reports = priceCalculator.calculateOrders(orders, priceKg, startDiscount, stepDiscount);
 
-        List<String> results = new ArrayList<>();
-        for (OrderReport report : reports) {
-            results.add(report.toString());
-        }
+        List<String> results = reports.stream()
+                .map(OrderReport::toString)
+                .toList();
 
         FileUtil.writeLines(outputPath, results);
     }

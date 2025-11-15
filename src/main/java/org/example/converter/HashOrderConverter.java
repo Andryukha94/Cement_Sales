@@ -11,18 +11,14 @@ public class HashOrderConverter implements OrderConverter {
     public List<Order> convertToOrders(List<String> lines) {
         List<Order> orders = new ArrayList<>();
 
-        for (String line : lines) {
-            if (line == null || line.trim().isEmpty()) continue;
-
-            String[] data = line.split("#");
-
-            String dateTime = data[0].trim();
-            String company = data[1].trim();
-            double weight = Double.parseDouble(data[2].trim());
-
-            orders.add(new Order(company, weight, LocalDateTime.parse(dateTime)));
-        }
-
-        return orders;
+        return lines.stream()
+                .filter(line -> line != null && !line.trim().isEmpty())
+                .map(line -> line.split("#"))
+                .map(data -> new Order(
+                        data[1].trim(),
+                        Double.parseDouble(data[2].trim()),
+                        LocalDateTime.parse(data[0].trim())
+                ))
+                .toList();
     }
 }
